@@ -9,11 +9,15 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const authStatus = useSelector((state) => state.auth.status);
+
+    const user = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
 
   useEffect(() => {
-    if (authStatus === 'succeeded') {
+
+    if (authStatus === 'succeeded' && user.token) {
+      localStorage.setItem('token', user.token);
       navigate('/dashboard');
     }
   }, [authStatus, navigate]);
